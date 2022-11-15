@@ -178,7 +178,7 @@ docker start -ai myJetscape
 You may find it useful to keep two terminals open — one inside the docker container, and one outside the container —
 so that you can easily execute commands either inside or outside the container, as appropriate.
 
-## (3) Test run of JETSCAPE 
+## (3) Test Run of JETSCAPE 
 
 From **inside** the docker container, we can now build JETSCAPE:
 ```
