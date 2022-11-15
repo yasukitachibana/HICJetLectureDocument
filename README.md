@@ -29,6 +29,25 @@ cd JETSCAPE/external_packages
 ./get_lbtTab.sh
 ```
 
+Then, go to `SummerSchool2022/Jul29_Jets` directory and download hydro profile files for this session:
+
+```
+cd ~/SummerSchool2022/Jul29_Jets
+source ./get_hydro_profile.sh
+```
+This will download the bulk medium evolution file (initial state + hydro) as:
+```
+SummerSchool2022/Jul29_Jets/test_hydro_profile/event-0
+```
+
+A faster way to download the bulk medium evolution file is using web-browser via the following link:
+
+[ClickMeToDownloadHydroProfile] (https://mcgill-my.sharepoint.com/:u:/g/personal/amit_kumar3_mail_mcgill_ca/Ef6fTGRzYVZAkmMQ3yA2iigBE3hUuTTdd7wCpxcUziSVaQ?e=vwOZAD )
+
+If you download the file through web-browser, please put the it at the location of  `SummerSchool2022/Jul29_Jets/test_hydro_profile/event-0`
+
+
+
 ## (2) Install Graphviz (if you do not have)
 
 If you use Anaconda, you can get Graphviz via the command, 
