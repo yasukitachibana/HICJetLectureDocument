@@ -162,11 +162,11 @@ so that you can easily execute commands either inside or outside the container, 
 ## (3) Test run of JETSCAPE 
 
 From **inside** the docker container, we can now build JETSCAPE:
-```bash
-cd JETSCAPE
+```
+cd ~/JETSCAPE
 mkdir build
 cd build
-cmake ..
+cmake .. -DUSE_MUSIC=ON -DUSE_ISS=ON
 make -j4     # Builds using 4 cores; adapt as appropriate
 ```
 
@@ -184,29 +184,11 @@ cd JETSCAPE/build
 This should take a couple minutes to run, and will print out a variety of information to stdout.
 Once done, it will produce a HepMC file test_out.hepmc in the same directory -- success!
 
-## (4) Install ROOT
 
-We will also make use of GUI interactions from time to time. 
-This is done most easily directly from your laptop (i.e. not via docker).
-Therefore, you should make sure you have a working installation of ROOT on your laptop:
-https://root.cern/install/. It is typically easiest to install ROOT via one of the package managers (for macOS
-and linux), conda, or else from the pre-compiled binaries.
+## (4) Test Open Jupyter Notebook through Docker
 
 
-## (5) Install some missing python packages and test open jupyter notebook through docker
-
-Inside docker container, run
-```bash
-pip3 install corner pyDOE
-pip3 install Gpy
-pip3 install ptemcee
-pip3 install --upgrade emcee==3.0.2
-pip3 install --upgrade seaborn==0.11.0
-```
-to install some extra python packages needed for the Bayesian part of the school.  The above only needs be done once.
-
-Then...let's try opening the jupyter notebook.
-
+Let's try opening the jupyter notebook inside docker container.
 Again when inside docker container, run
 ````bash
 jupyter-notebook --ip 0.0.0.0 --no-browser
