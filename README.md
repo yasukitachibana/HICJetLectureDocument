@@ -1,17 +1,9 @@
-# Preparation for the 2022 JETSCAPE School
+# Preparation
 
-Please carefully complete **all** of the below instructions **by Friday July 22**.
 
-In case of problems please head to the slack (you can find the link on the indico page) and ask in the `software-install-problems` channel.
+## (1) Download JETSCAPE and External Packages
 
-Due to a large number of participants and the online format, we will have limited capacity to address 
-personal software installation questions during the school — it is therefore imperative to **carefully**
-complete the below steps in advance of the school.
-If you have any issues or questions, please post on the slack.
-
-## (1) Download school material
-
-We will use code from several git repositories throughout the course of the school,
+We will use code from several git repositories throughout the course, 
 which you will run in a controlled software environment (docker). 
 Create a single directory to store all materials from the school:
 ```
@@ -26,7 +18,6 @@ Then download several pieces of software from git:
 ```bash
 git clone https://github.com/JETSCAPE/JETSCAPE.git
 git clone https://github.com/JETSCAPE/SummerSchool2022.git
-git clone https://github.com/JETSCAPE/STAT.git
 
 ```
 
@@ -35,12 +26,12 @@ Additionally, download a few external physics packages:
 cd JETSCAPE/external_packages
 ./get_music.sh
 ./get_iSS.sh
-./get_freestream-milne.sh
 ./get_lbtTab.sh
 ```
 
-
 ## (2) Install docker
+
+## (3) Install Docker
 
 Docker is a software tool that allows one to deploy an application in a portable environment. 
 A docker "image" can be created for the application, allowing any user to run a docker "container" from this image.
