@@ -29,7 +29,38 @@ cd JETSCAPE/external_packages
 ./get_lbtTab.sh
 ```
 
-## (2) Install docker
+## (2) Install Graphviz (if you do not have)
+
+If you use Anaconda, you can get Graphviz via the command, 
+```
+conda install graphviz  
+```
+
+For MacOS via Homebrew
+```
+brew install graphviz
+```
+
+For MacOS via MacPorts
+```
+sudo port install graphviz
+```
+
+For Ubuntu or Debian
+```
+sudo apt install graphviz
+```
+
+For Fedora, Redhat, or CentOS
+```
+sudo yum install graphviz
+```
+
+Or if you are already inside the JETSCAPE docker terminal run:
+```
+pip install graphviz
+```
+
 
 ## (3) Install Docker
 
