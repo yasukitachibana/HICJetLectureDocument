@@ -35,65 +35,9 @@ please try `sudo`.
 The option `-p 8888:8888` is necessary to creates a port to access the jupyter notebook, which we use in this hands-on session, from your local web browser.
 
 
-### <span style="color: orange; ">1.2. Get Materials<span>
 
 
-Inside the docker container, download the school material from git if you have not:
-
-```
-cd ~/
-git clone https://github.com/JETSCAPE/SummerSchool2022.git
-```
-
-If you have alread downloaded the material, please update to the latest version:
-
-```
-cd ~/SummerSchool2022
-git pull
-```
-  
-Please also update JETSCAPE to the latest version:
-
-```
-cd ~/JETSCAPE 
-git pull
-```
-
-Go to `SummerSchool2022/Jul29_Jets` directory and download hydro profile files for this session:
-
-```
-cd ~/SummerSchool2022/Jul29_Jets
-source ./get_hydro_profile.sh
-```
-This will download the bulk medium evolution file (initial state + hydro) as:
-```
- SummerSchool2022/Jul29_Jets/test_hydro_profile/event-0
-```
-
-A faster way to download the bulk medium evolution file is using web-browser via the following link:
-
-[ClickMeToDownloadHydroProfile] (https://mcgill-my.sharepoint.com/:u:/g/personal/amit_kumar3_mail_mcgill_ca/Ef6fTGRzYVZAkmMQ3yA2iigBE3hUuTTdd7wCpxcUziSVaQ?e=vwOZAD )
-
-
-
-### <span style="color: orange; ">1.3. Build JETSCAPE with LBT-tables, MUSIC and iSS</span>
-
-Please make sure all the external code packages (LBT-tables, MUSIC and iSS) have been
-downloaded in `JETSCAPE/external_packages`. You can check this by the following commands,
-
-```
-cd ~/JETSCAPE/external_packages
-ls
-```
-
-Please check the folder `LBT-tables`, `music` and `iSS` are present.
-If not, please get them with the following commands,
-
-```
-./get_lbtTab.sh
-./get_music.sh
-./get_iSS.sh
-```
+### <span style="color: orange; ">1.2. Build JETSCAPE with LBT-tables, MUSIC and iSS (If you have not done it yet.)</span>
 
 Setup and build JETSCAPE from inside the docker container:
 
@@ -104,6 +48,7 @@ cd build
 cmake .. -DUSE_MUSIC=ON -DUSE_ISS=ON
 make -j4
 ```
+
 ## <b>2. Toy models for jet energy loss [Day 1]</b>
 
 ### <span style="color: orange; ">2.1. Test Run and Graph Visualization</span>
@@ -123,174 +68,13 @@ Then, lets' Visualize the parton shower. First, run `readerTest` inside `build`
 ```
 By default, the executable `./readerTest` takes no argument.
 
-Next, go <b><u>outside the docker</u></b>, install Graphviz (if you do not have). 
-
-If you use Anaconda, you can get Graphviz via the command, 
-```
-conda install graphviz  
-```
-
-For MacOS via Homebrew
-```
-brew install graphviz
-```
-
-For MacOS via MacPorts
-```
-sudo port install graphviz
-```
-
-For Ubuntu or Debian
-```
-sudo apt install graphviz
-```
-
-For Fedora, Redhat, or CentOS
-```
-sudo yum install graphviz
-```
-
-Or inside docker terminal run:
-```
-pip install graphviz
-```
-
-Then, go `~/jetscape-docker/JETSCAPE/build` <b><u>outside the docker</u></b> and convert `my_test.gv` to a pdf file 
+Next, go <b><u>outside the docker</u></b>, move to `~/jetscape-docker/JETSCAPE/build` <b><u>outside the docker</u></b> and convert `my_test.gv` to a pdf file 
 ```
 dot my_test.gv -Tpdf -o outputPDF.pdf
 ```
 
 Open `outputPDF.pdf` in `build` with your pdf viewer and find the parton shower history.
 
-Next, let's configure `JETSCAPE/examples/readerTest.cc` to accept file (input and output) names as argument.
-To do this delete this line:
-
-```
-auto reader=make_shared<JetScapeReaderAscii>("test_out.dat"); 
-```  
-and replace with
-
-```
-auto reader=make_shared<JetScapeReaderAscii>(argv[1]);
-```
-also, change this line:
-
-```
-mShowers[i]->SaveAsGV("my_test.gv");
-```
-and replace with
-
-```
-mShowers[i]->SaveAsGV(argv[2]);
-```
-
-Alternatively, one can move the file following file into 'examples' directory:
-
-```
-mv ~/SummerSchool2022/Jul29_Jets/readerTest.cc  ~/JETSCAPE/examples/readerTest.cc
-```
-
-As this modifies the source file `readerTest.cc`, we need to build the JETSACPE code again:
-
-<b><u> Inside docker </b></u> (Inside `build` directory)
-
-```
-make
-```
-
-Now, we are ready to visualize the parton shower graph for different energy loss setup.
-
-<span style="color: blue; "> For each exercise below we generate one event and visualize the parton shower graph using graphviz.
-
-<span style="color: blue; "> Exercise 2.1: Setup XML file for "Parton Gun+ MATTER (Vacuum)"
-
-<b><u> Inside docker </b></u> (Inside `build` directory)
-
-```
-./runJetscape ../../SummerSchool2022/Jul29_Jets/config/jetscape_user_PGun_MATTER_Vacuum.xml
-./readerTest test_out_PGun_MATTER_Vacuum.dat Graph_PGun_MATTER_Vacuum.gv 
-```
-
-<b><u> Outside docker </b></u> (Inside `build` directory)
-
-```
-dot Graph_PGun_MATTER_Vacuum.gv -Tpdf -o Graph_PGun_MATTER_Vacuum.pdf
-```
-Now, we can open the generated pdf file to view the parton shower graph.
-
-<span style="color: blue; "> Exercise 2.2: Setup XML file for "Parton Gun+ Hydro Medium + MATTER (in-medium) without recoil"
-
-<b><u> Inside docker </b></u> (Inside `build` directory)
-
-```
-./runJetscape ../../SummerSchool2022/Jul29_Jets/config/jetscape_user_PGun_Hydro_MATTER_woRecoil.xml
-./readerTest test_out_PGun_Hydro_MATTER_woRecoil.dat Graph_PGun_Hydro_MATTER_woRecoil.gv 
-```
-
-<b><u> Outside docker </b></u> (Inside `build` directory)
-
-```
-dot Graph_PGun_Hydro_MATTER_woRecoil.gv -Tpdf -o Graph_PGun_Hydro_MATTER_woRecoil.pdf
-```
-
-
-<span style="color: blue; "> Exercise 2.3: Setup XML file for "Parton Gun+ Hydro Medium + MATTER (in-medium) + LBT with recoils"
-
-<b><u> Inside docker </b></u> (Inside `build` directory)
-
-```
-./runJetscape ../../SummerSchool2022/Jul29_Jets/config/jetscape_user_PGun_Hydro_MATTER_LBT.xml
-./readerTest test_out_PGun_Hydro_MATTER_LBT.dat Graph_PGun_Hydro_MATTER_LBT.gv 
-```
-
-<b><u> Outside docker </b></u> (Inside `build` directory)
-
-```
-dot Graph_PGun_Hydro_MATTER_LBT.gv -Tpdf -o Graph_PGun_Hydro_MATTER_LBT.pdf
-```
-
-<span style="color: blue; "> (Extra) Exercise 2.4: Setup XML file for "Parton Gun+ Hydro Medium + MATTER (in-medium) + MARTINI"
-
-Relevant XML file is `jetscape_user_PGun_Hydro_MATTER_MARTINI.xml`
-
-<span style="color: blue; "> (Extra) Exercise 2.5: Setup XML file for "Parton Gun+ Hydro Medium + MATTER (in-medium) + AdSCFT"
-
-Relevant XML file is `jetscape_user_PGun_Hydro_MATTER_AdSCFT.xml` 
-
-### <span style="color: orange; ">2.2. Explore effect of model parameters  in the energy spectrum (dN/dE)  </span>
-
-Generate 1000 events for the Exercieses 2.1 annd 2.3  annd create dN/dE spectrum as a function of energy E of the final state partons. To do this, we open the XML files `jetscape_user_PGun_MATTER_Vacuum.xml` and `jetscape_user_PGun_Hydro_MATTER_LBT.xml` 
- and set `<nEvents>1000</nEvents>`
-
-As usual, execute the following command to generate events:
-
-```
-./runJetscape ../../SummerSchool2022/Jul29_Jets/config/jetscape_user_PGun_MATTER_Vacuum.xml
-./runJetscape ../../SummerSchool2022/Jul29_Jets/config/jetscape_user_PGun_Hydro_MATTER_LBT.xml
-
-```
-
-### <span style="color: orange; "> Analysis (with Jupyter Notebook)</span>
-
-If you have already launched any jupyter notebooks outside the docker, please close them all first! Then, launch jupyter notebook in `SummerSchool2022/Jul29_Jets/notebooks` inside the docker container with the following command,
-
-```
-cd ~/SummerSchool2022/Jul29_Jets/notebooks
-jupyter-notebook --ip 0.0.0.0 --no-browser
-```
-
-Open the displayed address starting with `http://127.0.0.1:8888/?token=...` in your browser. 
-
-<img src="img/notebook1.png" alt="1" width="1000"/>
-
-
-Then, please open `dNdESpectra.ipynb`, and follow the instructions.
-
-<img src="img/notebook0.png" alt="1" width="1000"/>
-
-Once you are done, please close jupyter notebook to continue the later part of the workshop. 
-
-(Optional) One can follow the above procedure and explore the effects of changing parameters such as in-medium coupling, switching virtuality etc.
 
 ## <b>3. Jet events in pp and AA collisions [Day 1]</b>
 
