@@ -1,4 +1,4 @@
-# Preparation.
+# Preparation
 
 
 ## (1) Download JETSCAPE and External Packages
